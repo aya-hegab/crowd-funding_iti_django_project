@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block; 
+            text-align: center; 
+        }
+    </style>
+</head>
+<body>
+    <div class="global-container">
+        <div class="card login-form">
+            <div class="card-body">
+                {% if registration_success %}
+                <h3 class="card-title text-center">You have successfully registered as a user.</h3>
+                {% endif %}
+                <div class="card-text text-center">
+                    <h2>Login</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_username">Username:</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password">Password:</label>
+                            {{ form.password }}
+                        </div>
+                        <input type="submit" value="Login">
+                        <a href="{% url 'projects.list' %}" class="back-button">Back To Project Lists</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ error_message }}
+</body>
+
+
+</html>

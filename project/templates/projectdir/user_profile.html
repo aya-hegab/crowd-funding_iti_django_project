@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Projects</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    
+
+    <div class="container">
+      <div class="row pt-3">
+        <div class="col-md-3">
+          <div
+            class="col-md-11 shadow-sm p-3 mb-5 bg-body-tertiary rounded text-center"
+            style="background-color: #eee"
+          >
+            <div>
+              <img
+                class="rounded-circle account-img"
+                style="height: 150px; width: 150px; border: 5px solid white"
+                src="{{ user.profile.image.url }}"
+              />
+              <h2>{{ user.username }}</h2>
+            </div>
+            <a
+              class="nav-link"
+              style="font-weight: 600"
+              href="{% url 'delete_confirmation' user_id=user.id %}"
+              >Delete Account</a
+            >
+            <a
+              class="nav-link"
+              style="font-weight: 600"
+              href="{% url 'additional_info' %}"
+              >Additional Information</a
+            >
+            <a
+              class="nav-link"
+              style="font-weight: 600"
+              href="{% url 'update_user' user_id=user.id  %}"
+              >Update</a
+            >
+          </div>
+        </div>
+
+        <div class="col-md-9">
+          <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <h3
+              class="card-header"
+              style="background-color: #eee; font-weight: bold"
+            >
+              Additional Information
+            </h3>
+            <div class="card-body">
+              {% if user.additionalinfo %}
+              <div class="card-text">
+                <p>
+                  <span style="font-weight: bold">Birthdate:</span> {{
+                  user.additionalinfo.birthdate }}
+                </p>
+                <p>
+                  <span style="font-weight: bold">Country:</span> {{
+                  user.additionalinfo.country }}
+                </p>
+                <p>
+                  <span style="font-weight: bold">Facebook:</span> {{
+                  user.additionalinfo.facebook }}
+                </p>
+              </div>
+              {% else %}
+              <p>No additional information available.</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+            <h3
+              class="card-header"
+              style="background-color: #eee; font-weight: bold"
+            >
+              Projects
+            </h3>
+            <div class="card-body">
+              {% if user_projects %}
+              <div class="row">
+                {% for project in user_projects %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="card">
+                    {% if project.images.first %}
+                    <img
+                      style="height: 150px"
+                      src="{{ project.images.first.image.url }}"
+                      class="card-img-top"
+                      alt="Project Image"
+                    />
+                    {% endif %}
+                    <div class="card-body">
+                      <h5 class="card-title">{{ project.title }}</h5>
+                      <p class="card-text">
+                        <!-- <div style="height: 20px; overflow-y: hiddin;"> -->
+
+                        {{ project.details }}
+                        <!-- </div> -->
+                      </p>
+                      <h5 class="card-title">{{ project.donation_amount }}</h5>
+                      <p class="card-text">
+                        <strong>Category:</strong> {{ project.category }}
+                      </p>
+                      {% for tag in project.tags.all %}
+                      <a href="{% url 'tagged' tag.slug %}">{{tag.name}}</a>
+                      {% endfor %}
+                      <div
+                        style="
+                          display: flex;
+                          justify-content: space-between;
+                          align-items: center;
+                        "
+                      >
+                        <a
+                          class="mybtn"
+                          href="{% url 'project.detailes' project.id%}"
+                          >Show details</a
+                        >
+                        {% if project.is_cancelable %}
+                        <form
+                          method="post"
+                          action="{% url 'cancel_project' project.id %}"
+                        >
+                          {% csrf_token %}
+                          <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </form>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+              {% else %}
+              <p>No projects yet.</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+{% endblock%}

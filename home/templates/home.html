@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+
+<div class="navbar navbar-expand-lg navbar-light bg-light container-fluid bg-dark " >
+    <div class="collapse navbar-collapse ms-4   " id="navbarNav">
+        <ul class="navbar-nav container px-5 ">
+            <li class="nav-item">
+            </li>
+            {% for cate in category %}
+            <li class="nav-item ">
+                <a href="{% url 'cate' cate.id %}" class="navbar-brand btn btn-light" style="color: black;">{{cate.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+    
+            <!--slider-->
+            <section class="bg-dark py-5" id="highest-rated-projects">
+                <div class="container px-5">
+                    <div class="row gx-5 align-items-center justify-content-center">
+                        <div class="col-lg-8">
+                            <h2 class="display-5 fw-bold text-white mb-4">The Highest Five Rated Running Projects</h2>
+                            <div id="project-slider" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for project in highest_rated_projects %}
+                                        <div class="text-center carousel-item {% if forloop.first %}active{% endif %}">
+                                           
+                                            <img class="img-fluid rounded-3 my-2" width="300px" height="250" src="{{ project.images.first.image.url }}" alt="..." />
+                                            
+                                            <h3 class="text-white">{{ project.title }}</h3>
+                                            <p class="lead fw-normal text-white-50 mb-4">{{ project.details }}</p>
+                                            <p class="lead fw-normal text-white-50 mb-4">Average Rating: {{ project.avg_rating }}</p>
+                                            
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#project-slider" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#project-slider" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+           
+            <!-- Features section-->
+            <section class="py-5" id="features">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5">
+                        <div class=" mb-5 mb-lg-0"><h2 class="fw-bolder mb-0">The latest 5 featured projects .</h2></div>
+                        <div class="col-lg-12">
+                            <div class="row gx-5 row-cols-1 row-cols-md-3">
+                              {% for project in projects%}
+                              {% if project.is_featured %}
+                              <div class="col mb-5 h-100">
+                                <div class="feature rounded-3 " >
+                                {% if project.images.exists %}
+                                    <img class="img-fluid rounded-3 my-5" src="{{ project.images.first.image.url }}" alt="..." />
+                                {% else %}
+                                    
+                                    <img class="img-fluid rounded-3 my-5" src="{% static 'images/404.png' %}" alt="Default Image" />
+                                {% endif %}
+                                </div>
+                                <h2 class="h5">{{project.title}}</h2>
+                                <p class="mb-0">{{project.details}}</p>
+                            </div>
+                            {% endif %}
+                              {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--
+                
+            <div class="py-5 bg-light">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-10 col-xl-7">
+                            <div class="text-center">
+                                <div class="fs-4 mb-4 fst-italic">"Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"</div>
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                    <div class="fw-bold">
+                                        Tom Ato
+                                        <span class="fw-bold text-primary mx-1">/</span>
+                                        CEO, Pomodoro
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            -->
+            
+            <!--latest 5 project-->
+            
+            
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-8 col-xl-6">
+                            <div class="text-center">
+                                <h2 class="fw-bolder">Latest 5 Projects</h2>
+                                <p class="lead fw-normal text-muted mb-5">this is the laste 5 project </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row gx-5">
+                        {% for project in latest_projects %}
+                        <div class="col-lg-4 mb-5">
+                            <div class="card h-100 shadow border-0">
+                                <img class="card-img-top" src="{{ project.images.first.image.url }}" alt="..." />
+                                <div class="card-body p-4">
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
+                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">{{ project.title }}</h5></a>
+                                    <p class="card-text mb-0">{{ project.details }}</p>
+                                </div>
+                                <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                    <div class="d-flex align-items-end justify-content-between">
+                                        <div class="d-flex align-items-center">
+                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
+                                            <div class="small">
+                                                <div class="fw-bold">{{project.user}}</div>
+                                                <div class="text-muted">Start Time: {{ project.start_time }}  </div>
+                                                <div class="text-muted">End Time: {{ project.end_time }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                      
+                    </div>
+                   
+                </div>
+            </section>
+        </main>
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; esraa 2024</div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="#!">Privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Terms</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+{% endblock %}

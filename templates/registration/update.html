@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update</title>
+    <style>
+    .container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Form</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+               <label>Username</label>
+               <input type="text" name="username" value="{{ user_form.initial.username }}">
+            </div>
+            <div class="form-group">
+                <label>First Name</label>
+               <input type="text" name="first_name" value="{{ user_form.initial.first_name }}">
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+               <input type="text" name="last_name" value="{{ user_form.initial.last_name }}">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+               <input type="password" name="password" value="{{ user_form.initial.password }}">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+               <input type="password" name="confirm" value="{{ user_form.initial.confirm }}">
+            </div>
+            <div class="form-group">
+                <label>Mobile Phone</label>
+                <input type="text" name="mobile" value="{{ user_form.initial.mobile }}">
+                <span style="color:red; font-size: 12px;">The Mobile Number Should Start With +20</span>
+            </div>
+            <!-- <div class="form-group">
+                <label for="profile_picture">Profile Picture:</label>
+                <input type="file" name="profile_picture" id="id_profile_picture" value="{{ user_form.initial.profile_picture }}">
+            </div> -->
+            <button type="submit">Update</button>
+        </form>
+        <div style="color:red">
+        {{ msg }}</div>
+    </div>
+</body>
+
+
+</html>

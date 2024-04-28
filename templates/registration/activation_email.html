@@ -1,0 +1,7 @@
+{% load static %} <!-- Load the static template tag at the beginning -->
+
+Click the link below to activate your account:
+
+{{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+This link will expire in 24 hours.

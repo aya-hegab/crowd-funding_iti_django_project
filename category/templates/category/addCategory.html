@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <title>add category</title>
+  </head>
+  <body>
+    <form method="post" enctype="multipart/form-data">
+      {%csrf_token%}
+
+      <table class="table mx-5 container mt-5">
+        <tr>
+          <td>{{form}}</td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input
+              type="submit"
+              value="ADD"
+              style="width: 30%; padding: 0.5rem; margin-left: 31%"
+            />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
+{% endblock%}

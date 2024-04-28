@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Projects</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="card shadow-lg p-3 mb-5 bg-body-tertiary rounded container">
+      <h3 class="card-header" style="background-color: #eee; font-weight: bold">
+        {{tag_name}}
+      </h3>
+      <div class="card-body">
+        <div class="row">
+          {% for project in projects %}
+          <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card">
+              <img
+                style="height: 150px"
+                src="{{ project.images.first.image.url }}"
+                class="card-img-top"
+                alt="Project Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ project.title }}</h5>
+                <p class="card-text">{{ project.details }}</p>
+                <h5 class="card-title">{{ project.donation_amount }}</h5>
+                <p class="card-text">
+                  <strong>Category:</strong> {{ project.category }}
+                </p>
+                {% for tag in project.tags.all %}
+                <a href="{% url 'tagged' tag.slug %}">{{tag.name}}</a>
+                {% endfor %}
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                  "
+                >
+                  <a
+                    class="mybtn"
+                    href="{% url 'project.detailes' project.id %}"
+                    >Show details</a
+                  >
+                  <form
+                    method="post"
+                    action="{% url 'cancel_project' project.id %}"
+                  >
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+</body>
+</html>
